@@ -1,12 +1,9 @@
-import PropTypes from 'prop-types';
-// import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 import css from './ContactForm.module.css';
 
-import { getContacts } from 'redux/selectors';
-import { addContact } from 'redux/contactsSlice';
+import { getContacts } from 'redux/contacts/selectors_contact';
+import { addContact } from 'redux/contacts/operations';
 import { useSelector } from 'react-redux';
-import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 
 export const ContactForm = () => {
@@ -25,7 +22,7 @@ export const ContactForm = () => {
         setNumber(ev.currentTarget.value);
         break;
       default:
-        alert('Something went wrong');
+        alert('Oops, our developer broke something');
     }
   };
 
@@ -43,8 +40,8 @@ export const ContactForm = () => {
       alert(`${client.name} is already in your contact list`);
       return;
     }
-    const newClient = { id: nanoid(), ...client };
-    dispatch(addContact(newClient));
+
+    dispatch(addContact(client));
     setNumber('');
     setName('');
     return;
@@ -83,8 +80,4 @@ export const ContactForm = () => {
       </button>
     </form>
   );
-};
-
-ContactForm.propTypes = {
-  pushToContact: PropTypes.func.isRequired,
 };
